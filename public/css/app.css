@@ -1,5 +1,5 @@
 body {
-  padding-top: 60px;
+
 }
 
 .container {
@@ -7,10 +7,10 @@ body {
   max-width: 680px;
 }
 
-.article, .comment {
+/*.article, .comment {
   padding: 15px 0;
   border-top: 1px solid #e8e8e8;
-}
+}*/
 
 
 .error {
@@ -20,4 +20,83 @@ body {
 .form-actions {
   background: #fff;
   border: 0;
+}
+
+.header{
+    height: 30px;
+    padding: 30px;
+    background: #aaa;
+    opacity: .8;    
+}
+.logo{
+    float: left;
+
+
+}
+
+.login{
+    float: right;
+}
+
+.article{
+    float: left;
+    height: 150px;
+    width: 30%;
+    padding: 10px 1.5%;
+    background: #3a3a3a;
+    background-size:200px; 
+    color: white;
+    border: 1px solid #2c2c2c;
+}
+
+.article h3{
+   
+    line-height: 1em;
+   
+    font-size: :19px;
+}
+
+.article-head{
+     width:40%;
+     float: right;
+    text-align: right;
+    font-size: 19px;
+    text-transform: uppercase;
+}
+.article-body{
+    text-align: right;
+    font-size: 15px;
+
+}
+.article-body p{
+    color: gray;
+}
+.article a{
+    color : white;
+}
+.content {
+    float: left;
+    padding-left: 50px;
+}
+.logout{
+    float: right;
+}
+.unit{
+    width:100%;
+    border: 1px solid black
+}
+.myArticle{
+    float: left;
+    width:40%;
+}
+.suggestions{
+    float: left;
+    width: 50%
+    border: 1px solid black;
+}
+.clr{
+    clear: both;
+}
+.wish{
+    text-align: center;
 }

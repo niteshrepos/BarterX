@@ -1,33 +1,64 @@
-
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose')
-  , Article = mongoose.model('Article')
-  , utils = require('../../lib/utils')
-  , _ = require('underscore')
+var mongoose = require('mongoose'),
+  Article = mongoose.model('Article'),
+  utils = require('../../lib/utils'),
+  _ = require('underscore')
 
-/**
- * Load
- */
+  /**
+   * Load
+   */
 
-exports.load = function(req, res, next, id){
-  var User = mongoose.model('User')
+  exports.load = function(req, res, next, id) {
+    var User = mongoose.model('User')
 
-  Article.load(id, function (err, article) {
-    if (err) return next(err)
-    if (!article) return next(new Error('not found'))
-    req.article = article
-    next()
-  })
-}
+    Article.load(id, function(err, article) {
+      if (err) return next(err)
+      if (!article) return next(new Error('not found'))
+      req.article = article
+      next()
+    })
+  }
 
-/**
- * List
- */
+  /**
+   * List
+   */
 
-exports.index = function(req, res){
+  exports.dashboard = function(req, res) {
+    var renderObject = {};
+
+    Article.find({
+      'user': req.user._id
+    }, function(err, articles) {
+
+      // console.log
+      if (err) return res.render('500')
+      Article.count().exec(function(err, count) {
+        Article.find({
+          'user': req.user._id
+        }, function(err, allArticles) {
+          Article.count().exec(function(err, count) {
+            res.render("dashboard", {
+              articles: articles,
+              recommendedArticles: allArticles
+            });
+          })
+        })
+        // res.render('articles/index', {
+        //   title: 'Articles',
+        //   articles: articles,
+        //   page: page + 1,
+        //   pages: Math.ceil(count / perPage)
+        // })
+
+      })
+    })
+
+  }
+
+exports.index = function(req, res) {
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1
   var perPage = 30
   var options = {
@@ -37,7 +68,7 @@ exports.index = function(req, res){
 
   Article.list(options, function(err, articles) {
     if (err) return res.render('500')
-    Article.count().exec(function (err, count) {
+    Article.count().exec(function(err, count) {
       res.render('articles/index', {
         title: 'Articles',
         articles: articles,
@@ -45,14 +76,14 @@ exports.index = function(req, res){
         pages: Math.ceil(count / perPage)
       })
     })
-  })  
+  })
 }
 
 /**
  * New article
  */
 
-exports.new = function(req, res){
+exports.new = function(req, res) {
   res.render('articles/new', {
     title: 'New Article',
     article: new Article({})
@@ -63,14 +94,14 @@ exports.new = function(req, res){
  * Create an article
  */
 
-exports.create = function (req, res) {
+exports.create = function(req, res) {
   var article = new Article(req.body)
   article.user = req.user
 
-  article.uploadAndSave(req.files.image, function (err) {
+  article.uploadAndSave(req.files.image, function(err) {
     if (!err) {
       req.flash('success', 'Successfully created article!')
-      return res.redirect('/articles/'+article._id)
+      return res.redirect('/dashboard')
     }
 
     res.render('articles/new', {
@@ -85,7 +116,7 @@ exports.create = function (req, res) {
  * Edit an article
  */
 
-exports.edit = function (req, res) {
+exports.edit = function(req, res) {
   res.render('articles/edit', {
     title: 'Edit ' + req.article.title,
     article: req.article
@@ -96,7 +127,7 @@ exports.edit = function (req, res) {
  * Update article
  */
 
-exports.update = function(req, res){
+exports.update = function(req, res) {
   var article = req.article
   article = _.extend(article, req.body)
 
@@ -117,7 +148,7 @@ exports.update = function(req, res){
  * Show
  */
 
-exports.show = function(req, res){
+exports.show = function(req, res) {
   res.render('articles/show', {
     title: req.article.title,
     article: req.article
@@ -128,9 +159,9 @@ exports.show = function(req, res){
  * Delete an article
  */
 
-exports.destroy = function(req, res){
+exports.destroy = function(req, res) {
   var article = req.article
-  article.remove(function(err){
+  article.remove(function(err) {
     req.flash('info', 'Deleted successfully')
     res.redirect('/articles')
   })

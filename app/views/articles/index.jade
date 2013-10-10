@@ -1,37 +1,48 @@
-extends ../layouts/default
+!!! 5
+html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/2008/fbml', itemscope='itemscope', itemtype='http://schema.org/Product')
+  include ../includes/head
+  body
+    .wrapper
+        .header
+          .logo BarterX
+          .login 
+            a(href="/auth/facebook") login with facebook |
+          .logout
+            a(href="/logout") logout |
+          .dashboard
+            a(href="/dashboard") dashboard  
+            
 
-block main
-  h1= title
+        - if (articles.length)
+          - each article in articles
+            .article
+              .article-head
+                h3
+                  a(href='/articles/'+article._id, title=article.title) #{article.title}
+              .article-body
+                p= article.body
 
-block content
-  - if (articles.length)
-    - each article in articles
-      .article
-        h3
-          a(href='/articles/'+article._id, title=article.title) #{article.title}
-        p= article.body
+              //- .meta.muted
+              //-   span= formatDate(article.createdAt)
+              //-   &nbsp; - &nbsp;
+              //-   - if (article.user)
+              //-     span Author &nbsp;
 
-        .meta.muted
-          span= formatDate(article.createdAt)
-          &nbsp; - &nbsp;
-          - if (article.user)
-            span Author &nbsp;
+              //-     - var name = article.user.name ? article.user.name : article.user.username
 
-            - var name = article.user.name ? article.user.name : article.user.username
+              //-     a(href="/users/"+article.user._id)= name
+              //-   &nbsp; - &nbsp;
+              //-   - if (article.tags)
+              //-     - each tag in article.tags.split(',')
+              //-       &nbsp;
+              //-       a.tag(href="/tags/"+tag)
+              //-         i.icon-tags
+              //-         |  #{tag}
 
-            a(href="/users/"+article.user._id)= name
-          &nbsp; - &nbsp;
-          - if (article.tags)
-            - each tag in article.tags.split(',')
-              &nbsp;
-              a.tag(href="/tags/"+tag)
-                i.icon-tags
-                |  #{tag}
-
-    - if (pages > 1)
-      .pagination
-        ul
-          != createPagination(pages, page)
-  - else
-    p.muted No articles.&nbsp;
-      a(href="/articles/new") create one
+          - if (pages > 1)
+            .pagination
+              ul
+                != createPagination(pages, page)
+        - else
+          p.muted No articles.&nbsp;
+            a(href="/articles/new") create one

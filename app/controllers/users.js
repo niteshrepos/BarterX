@@ -8,12 +8,7 @@ var mongoose = require('mongoose')
   , utils = require('../../lib/utils')
 
 var login = function (req, res) {
-  if (req.session.returnTo) {
-    res.redirect(req.session.returnTo)
-    delete req.session.returnTo
-    return
-  }
-  res.redirect('/')
+ res.redirect("/dashboard");
 }
 
 exports.signin = function (req, res) {}
@@ -52,7 +47,7 @@ exports.signup = function (req, res) {
 
 exports.logout = function (req, res) {
   req.logout()
-  res.redirect('/login')
+  res.redirect('/')
 }
 
 /**

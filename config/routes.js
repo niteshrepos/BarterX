@@ -95,6 +95,15 @@ module.exports = function (app, passport) {
   app.put('/articles/:id', articleAuth, articles.update)
   app.del('/articles/:id', articleAuth, articles.destroy)
 
+  // app.get("/dashboard", function(req, res){
+  //   res.render("dashboard", {
+  //     myArticels: "",
+
+  //   });
+  // })
+
+  app.get("/dashboard", articles.dashboard);
+
   app.param('id', articles.load)
 
   // home route
