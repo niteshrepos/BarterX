@@ -2,10 +2,13 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
-  utils = require('../../lib/utils'),
-  _ = require('underscore')
+
+var mongoose = require('mongoose')
+  , Article = mongoose.model('Article')
+  , utils = require('../../lib/utils')
+  , _ = require('underscore')
+  , fs = require('fs')
+
 
   /**
    * Load
@@ -96,7 +99,14 @@ exports.new = function(req, res) {
 
 exports.create = function(req, res) {
   var article = new Article(req.body)
-  article.user = req.user
+  article.user = req.user;
+  console.log('req.files.image[0].path ', req.files.image[0].path)
+  fs.readFile(req.files.image[0].path, function(err, data) {
+    var newPath = __dirname + "/../../public/img/" + req.files.image[0].originalFilename;
+    fs.writeFile(newPath, data, function(err) {
+      console.error(err);
+    });
+  });
 
   article.uploadAndSave(req.files.image, function(err) {
     if (!err) {
