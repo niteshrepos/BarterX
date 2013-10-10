@@ -67,13 +67,13 @@ ArticleSchema.path('body').validate(function (body) {
  */
 
 ArticleSchema.pre('remove', function (next) {
-  var imager = new Imager(imagerConfig, 'S3')
-  var files = this.image.files
+  // var imager = new Imager(imagerConfig, 'S3')
+  // var files = this.image.files
 
-  // if there are files associated with the item, remove from the cloud too
-  imager.remove(files, function (err) {
-    if (err) return next(err)
-  }, 'article')
+  // // if there are files associated with the item, remove from the cloud too
+  // imager.remove(files, function (err) {
+  //   if (err) return next(err)
+  // }, 'article')
 
   next()
 })
