@@ -9,6 +9,7 @@ var mongoose = require('mongoose')
   , config = require('../../config/config')[env]
   , imagerConfig = require(config.root + '/config/imager.js')
   , Schema = mongoose.Schema
+  , fs = require('fs')
 
 /**
  * Getters
@@ -40,10 +41,7 @@ var ArticleSchema = new Schema({
     createdAt: { type : Date, default : Date.now }
   }],
   tags: {type: [], get: getTags, set: setTags},
-  image: {
-    cdnUri: String,
-    files: []
-  },
+  image: { data: Buffer, contentType: String },
   createdAt  : {type : Date, default : Date.now},
   value:{type : String, default : '', trim : true},
   lookingForAuthor:{type : String, default : '', trim : true},
@@ -95,17 +93,9 @@ ArticleSchema.methods = {
 
   uploadAndSave: function (images, cb) {
     if (!images || !images.length) return this.save(cb)
-
-    var imager = new Imager(imagerConfig, 'S3')
-    var self = this
-
-    imager.upload(images, function (err, cdnUri, files) {
-      if (err) return cb(err)
-      if (files.length) {
-        self.image = { cdnUri : cdnUri, files : files }
-      }
-      self.save(cb)
-    }, 'article')
+    this.image.data = fs.readFileSync(images[0].path);
+    this.image.contentType = 'image/png';
+    this.save(cb)
   },
 
   /**
