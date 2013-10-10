@@ -41,7 +41,7 @@ var ArticleSchema = new Schema({
     createdAt: { type : Date, default : Date.now }
   }],
   tags: {type: [], get: getTags, set: setTags},
-  image: { data: Buffer, contentType: String },
+  image: { location: String},
   createdAt  : {type : Date, default : Date.now},
   value:{type : String, default : '', trim : true},
   lookingForAuthor:{type : String, default : '', trim : true},
@@ -93,8 +93,7 @@ ArticleSchema.methods = {
 
   uploadAndSave: function (images, cb) {
     if (!images || !images.length) return this.save(cb)
-    this.image.data = fs.readFileSync(images[0].path);
-    this.image.contentType = 'image/png';
+    this.image.location = images[0].originalFilename;
     this.save(cb)
   },
 
