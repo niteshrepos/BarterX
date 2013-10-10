@@ -39,9 +39,7 @@ var mongoose = require('mongoose')
       // console.log
       if (err) return res.render('500')
       Article.count().exec(function(err, count) {
-        Article.find({
-          'user': req.user._id
-        }, function(err, allArticles) {
+        Article.find({'user': {'$ne': req.user._id}}, function(err, allArticles) {
           Article.count().exec(function(err, count) {
             res.render("dashboard", {
               articles: articles,
@@ -61,6 +59,14 @@ var mongoose = require('mongoose')
 
   }
 
+exports.wishFor = function(req, res){
+  console.log("art", req.article);
+  console.log("body", req.body.wishFor)
+  req.article.wishFor.push(req.body.wishFor)
+  req.article.save(); 
+  res.send("done")
+
+}
 exports.index = function(req, res) {
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1
   var perPage = 30

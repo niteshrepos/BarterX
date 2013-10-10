@@ -17,17 +17,18 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
             .myArticle     
                 p= article.title
             .suggestions
-                input(type="hidden")
-                - if (recommendedArticles.length)
-                    - each recommendedArticle in recommendedArticles
-                        input(type="radio", val=recommendedArticle._id.toString(), name= article.title+"suggestion")
-                        p= recommendedArticle.title
-
+                form(action="articles/"+article._id+"/wishFor", method="POST")
+                    input(type="hidden" name="wishFor")
+                    - if (recommendedArticles.length)
+                        - each recommendedArticle in recommendedArticles
+                            input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
+                            p= recommendedArticle.title
+                    .wish
+                        input(type="submit") wish      
             .clr
-            .wish
-                a(href="/wish") wish
+            
 
     script
-        $("[type=radio]").change(function(){
-           console.log($(this).val())
-        })                        
+        $("[type=radio]").change(function(){ 
+           $("[type=hidden]").val($(this).val());
+        })                                  

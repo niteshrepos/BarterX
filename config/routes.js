@@ -95,6 +95,8 @@ module.exports = function (app, passport) {
   app.put('/articles/:id', articleAuth, articles.update)
   app.del('/articles/:id', articleAuth, articles.destroy)
 
+  app.post('/articles/:id/wishFor', auth.requiresLogin, articles.wishFor)
+
   // app.get("/dashboard", function(req, res){
   //   res.render("dashboard", {
   //     myArticels: "",
@@ -102,7 +104,7 @@ module.exports = function (app, passport) {
   //   });
   // })
 
-  app.get("/dashboard", articles.dashboard);
+  app.get("/dashboard", articles.dashboard );
 
   app.param('id', articles.load)
 

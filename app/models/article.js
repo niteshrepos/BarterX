@@ -46,7 +46,8 @@ var ArticleSchema = new Schema({
   value:{type : String, default : '', trim : true},
   lookingForAuthor:{type : String, default : '', trim : true},
   lookingForIsbn:{type : String, default : '', trim : true},
-  lookingForKeywords:{type : String, default : '', trim : true}
+  lookingForKeywords:{type : String, default : '', trim : true},
+  wishFor:{type : []}
 })
 
 /**
