@@ -59,14 +59,28 @@ var mongoose = require('mongoose')
 
   }
 
-exports.wishFor = function(req, res){
-  console.log("art", req.article);
-  console.log("body", req.body.wishFor)
-  req.article.wishFor.push(req.body.wishFor)
-  req.article.save(); 
-  res.send("done")
-
+exports.wishFor = function(req, res) {
+  Article.load(req.body.wishFor, function(err, article) {
+    // if (err) return next(err)
+    // if (!article) return next(new Error('not found'))
+    article.wishFor.push(req.article._id);
+    article.save();
+    res.redirect("/dashboard");
+  })
 }
+
+exports.accepted = function(req, res) {
+  Article.load(req.body.wishFor, function(err, article) {
+    // if (err) return next(err)
+    // if (!article) return next(new Error('not found'))
+    article.accepted = req.article._id;
+    article.save();
+    req.article.accepted = article._id;
+    req.article.save();
+    res.redirect("/dashboard");
+  })
+}
+
 exports.index = function(req, res) {
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1
   var perPage = 30

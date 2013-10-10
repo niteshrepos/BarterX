@@ -96,6 +96,7 @@ module.exports = function (app, passport) {
   app.del('/articles/:id', articleAuth, articles.destroy)
 
   app.post('/articles/:id/wishFor', auth.requiresLogin, articles.wishFor)
+  app.post('/articles/:id/accepted', auth.requiresLogin, articles.accepted)
 
   // app.get("/dashboard", function(req, res){
   //   res.render("dashboard", {

@@ -21,7 +21,10 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                     input(type="hidden" name="wishFor")
                     - if (recommendedArticles.length)
                         - each recommendedArticle in recommendedArticles
-                            input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
+                            - if (article.wishFor.indexOf(recommendedArticle._id) > -1)
+                                input(data-selected="true", type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
+                            - else
+                                input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
                             p= recommendedArticle.title
                     .wish
                         input(type="submit") wish      
@@ -31,4 +34,12 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
     script
         $("[type=radio]").change(function(){ 
            $("[type=hidden]").val($(this).val());
+           if($(this).attr("data-selected")) {
+            $(this).closest("form").attr("action", function(i,n){
+              var a = n.split("/");
+              a[2] = "accepted";
+              return a.join("/")
+              })
+            $(this).siblings(".wish").find("input").val("accepted")
+           }            
         })                                  
