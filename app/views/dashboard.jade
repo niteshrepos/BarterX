@@ -4,18 +4,29 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
   body
     .wrapper
         .header
-          .logo BarterX
-          .content
-            a(href="articles/new") I Have 
-            a(href="articles") I want 
+          .logo
+            img(src="img/logo.png" width="40px")
+          .login
+            - if (req.isAuthenticated())
+                a(href="articles/new") I Have 
+                a(href="articles") I want 
+                span(style="display:inline-block; padding:10px 30px;")
+                  a(href="/dashboard") dashboard  
+                span
+                  a(href="/logout") logout 
+               
+          
+            -else    
+                a(href="articles/new") I Have 
+                a(href="articles") I want 
+                a(href="/auth/facebook") login with facebook 
+
             
-          .logout 
-            a(href="logout") logout
    - if (articles.length)
       - each article in articles
         .unit
             .myArticle     
-                p= article.title
+              img(src="img/"+article.image.location height="250" width="180px")
             .suggestions
                 form(action="articles/"+article._id+"/wishFor", method="POST")
                     input(type="hidden" name="wishFor")
@@ -25,13 +36,19 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                                 input(data-selected="true", type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
                             - else
                                 input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
-                            p= recommendedArticle.title
+                            .item
+                              img(src="img/"+recommendedArticle.image.location height="250" width=);
                     .wish
                         input(type="submit") wish      
             .clr
             
 
     script
+        $(".suggestions").each(function(i,n){
+            console.log($(this).find(".item").css("left", function(i,n){
+              return i*80+"px";
+              }))
+          })
         $("[type=radio]").change(function(){ 
            $("[type=hidden]").val($(this).val());
            if($(this).attr("data-selected")) {

@@ -11,7 +11,17 @@ body {
   padding: 15px 0;
   border-top: 1px solid #e8e8e8;
 }*/
+.suggestions img {
+    border: 1px solid gey
+}
+.myArticle {
 
+}
+.login a{
+    text-decoration: none;
+    color:white;
+    font-size: 17px;
+}
 
 .error {
   color: #FF2602;
@@ -33,7 +43,11 @@ body {
 
 
 }
-
+.item{
+    position: absolute;
+    top:20px;
+    left: 0;
+}
 .login{
     float: right;
 }
@@ -47,28 +61,27 @@ body {
     background-size:200px; 
     color: white;
     border: 1px solid #2c2c2c;
+    overflow: hidden;
 }
 
-.article h3{
-   
+
+.article-header h3{
+    font-size: 26px !important;
     line-height: 1em;
-   
-    font-size: :19px;
-}
-
-.article-head{
-     width:40%;
-     float: right;
     text-align: right;
     font-size: 19px;
     text-transform: uppercase;
 }
-.article-body{
-    text-align: right;
-    font-size: 15px;
-
+.article-img{
+    width:30%;
+   float: left;
+}
+.article-text{
+    width:60%;
+    float: right;
 }
 .article-body p{
+    line-height: 1.2em;
     color: gray;
 }
 .article a{
@@ -78,6 +91,12 @@ body {
     float: left;
     padding-left: 50px;
 }
+.login{
+    float: right;
+}
+.dashboard{
+    float: right;
+}
 .logout{
     float: right;
 }
@@ -86,13 +105,16 @@ body {
     border: 1px solid black
 }
 .myArticle{
+    padding: 20px 0 0 50px;
     float: left;
-    width:40%;
+    width:30%;
 }
 .suggestions{
+    padding-top:50px; 
+    position: relative;
     float: left;
-    width: 50%
-    border: 1px solid black;
+    width: 50%;
+    /*border: 1px solid black;*/
 }
 .clr{
     clear: both;

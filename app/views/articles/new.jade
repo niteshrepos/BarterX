@@ -1,4 +1,17 @@
-extends ../layouts/default
+.header
+          .logo
+            img(src="img/logo.png" width="40px")
+          .login
+            - if (req.isAuthenticated())
+                span(style="display:inline-block; padding:10px 30px;")
+                  a(href="/dashboard") dashboard  
+                span
+                  a(href="/logout") logout 
+               
+          
+            -else    
+                a(href="/auth/facebook") login with facebook 
+            
 
 
 block main
