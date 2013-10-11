@@ -36,13 +36,14 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                                 //- input(data-selected="true", type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
                                    .item
                                 .item
-                                  img(src="img/wish-tag.png" width="40px" style="position:absolute; ")
-                                  img.wishedFor(src="img/"+recommendedArticle.image.location height="250" data-rel=recommendedArticle._id);
+                                  img(src="img/wish-tag.png" width="40px" style="position:absolute;")
+                                  img.wishedFor(src="img/"+recommendedArticle.image.location height="250" );
                                 
                             - else
                                 //- input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
                                 .item
-                                  img(src="img/"+recommendedArticle.image.location width="auto" height="250" data-rel=recommendedArticle._id);
+                                    input(type = "hidden", value=recommendedArticle._id); 
+                                    img(src="img/"+recommendedArticle.image.location width="auto" height="250" );
                     .wish(style="position:absolute;z-index:1000;top:236px;left:-86px")
                         input.btn.btn-primary(type="submit" value="wish")              
             .clr
@@ -55,7 +56,9 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
           $(this).siblings(".item").css("opacity",0.5)
           $(this).css("opacity", 1) 
           $(this).css("z-index", 1)
-          $("[type=hidden]").val($(this).find("img").attr("data-rel"));
+          $(this).find("input").val()
+          //console.log($(this).find("img").data("rel").replace('"', ''));
+          $("[type=hidden]").val($(this).find("input").val());
            $(this).closest("form").attr("action", function(i,n){
               var a = n.split("/");
               a[2] = "wishFor";

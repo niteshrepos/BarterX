@@ -7,6 +7,10 @@ body {
   max-width: 680px;
 }
 
+a["href"="articles/new"]{
+    background: #eee;
+    padding: 5px;
+}
 /*.article, .comment {
   padding: 15px 0;
   border-top: 1px solid #e8e8e8;

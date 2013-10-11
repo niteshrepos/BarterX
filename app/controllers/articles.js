@@ -61,8 +61,8 @@ var mongoose = require('mongoose')
 
 exports.wishFor = function(req, res) {
   console.log("wish", req.body.wishFor);
-  Article.findOne(req.body.wishFor, function(err, article) {
-    var art = new Article(article);
+  Article.load(req.body.wishFor, function(err, article) {
+    var art = article;
     // if (err) return next(err)
     // if (!article) return next(new Error('not found'))
     console.log("reqart",req.article._id);
