@@ -33,17 +33,28 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                     - if (recommendedArticles.length)
                         - each recommendedArticle in recommendedArticles
                             - if (article.wishFor.indexOf(recommendedArticle._id) > -1)
-                                input(data-selected="true", type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
+                                //- input(data-selected="true", type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
+                                   .item
+                                img.wishedFor(src="img/"+recommendedArticle.image.location height="250" data-rel=recommendedArticle._id);
+                                img(src="img/wish-tag.png")
                             - else
-                                input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
-                            .item
-                              img(src="img/"+recommendedArticle.image.location height="250" width=);
-                    .wish
-                        input(type="submit") wish      
+                                //- input(type="radio", value=recommendedArticle._id, name= article.title+"suggestion")
+                              .item
+                                img(src="img/"+recommendedArticle.image.location height="250" data-rel=recommendedArticle._id);
+            .wish(style="z-index:1000")
+                        input(type="submit") wish              
             .clr
+              
             
 
     script
+        $(".suggestions").find(".item").click(function(){
+          $(this).siblings(".item").css("z-index",0) 
+          $(this).siblings(".item").css("opacity",0.5)
+          $(this).css("opacity", 1) 
+          $(this).css("z-index", 1)
+          $("[type=hidden]").val($(this).find("img").attr("data-rel"));
+          })
         $(".suggestions").each(function(i,n){
             console.log($(this).find(".item").css("left", function(i,n){
               return i*80+"px";
