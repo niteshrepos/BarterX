@@ -40,7 +40,6 @@ var ArticleSchema = new Schema({
     user: { type : Schema.ObjectId, ref : 'User' },
     createdAt: { type : Date, default : Date.now }
   }],
-  tags: {type: [], get: getTags, set: setTags},
   image: { location: String},
   createdAt  : {type : Date, default : Date.now},
   value:{type : String, default : '', trim : true},
