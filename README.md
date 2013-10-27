@@ -1,1 +1,0 @@
-A Barter platform 
